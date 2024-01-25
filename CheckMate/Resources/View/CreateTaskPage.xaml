@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CheckMate_App.View.CreateTaskPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:CheckMate.ViewModels"
+    xmlns:models="clr-namespace:CheckMate.Models"
+    x:DataType="vm:TasksViewModel"
+    Title="Create Task"
+    BackgroundColor="White"
+    BackgroundImageSource="yellownotebookbackgroundimage.svg">
+    
+    <ScrollView>
+    <VerticalStackLayout>
+        <Label
+            Text="Name"
+            Margin="50,20,10,0"
+            FontSize="Medium"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            VerticalTextAlignment="Center" />
+        <Entry
+            Placeholder="Task Name"
+            WidthRequest="225" />
+        
+        <Label
+            Text="Completion Time"
+            Margin="50,20,10,0"
+            FontSize="Medium"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            VerticalTextAlignment="Center" />
+
+            <DatePicker
+            x:Name="Date"
+            WidthRequest="225"
+            DateSelected="Date_DateSelected"
+            />
+
+
+        <Label
+         Text="Timer"
+         Margin="50,20,10,0"
+         FontSize="Medium"
+         HorizontalOptions="Start"
+         VerticalOptions="Center"
+         VerticalTextAlignment="Center" />
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End" Margin="0,0,20,0">
+                <Entry
+                    x:Name="Timer_HourEntry"
+                    Placeholder="Input value for hours"
+                    WidthRequest="225"
+                    Keyboard="Numeric"
+                    TextChanged="Timer_TextChanged"
+                />
+                <Entry
+                    x:Name="Timer_MinutesEntry"
+                    Placeholder="Input value for minutes"
+                    WidthRequest="225"
+                    Keyboard="Numeric"
+                    TextChanged="Timer_TextChanged"
+                />
+                <Entry
+                    x:Name="Timer_SecondsEntry"
+                    Placeholder="Input value for seconds"
+                    WidthRequest="225"
+                    Keyboard="Numeric"
+                    TextChanged="Timer_TextChanged"
+                />
+            </StackLayout>
+
+            <Label
+            Text="Priority"
+            Margin="50,20,10,0"
+            FontSize="Medium"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            VerticalTextAlignment="Center" />
+        
+        <Label
+            Text="Description"
+            Margin="50,20,10,0"
+            FontSize="Medium"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            VerticalTextAlignment="Center" />
+        
+        <Editor
+            Placeholder="Task Description"
+            MaxLength=" 500"
+            WidthRequest="225" />
+        
+        <Label
+            Text="Difficulty"
+            Margin="50,20,10,0"
+            FontSize="Medium"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            VerticalTextAlignment="Center" />
+        
+        <Button
+            Text="Create"
+            Margin="5"
+            BackgroundColor="Gray"
+            TextColor="Black" />
+
+            <Button
+            Text="Cancel"
+            Margin="5"
+            BackgroundColor="Gray"
+            TextColor="Black" 
+            
+            />
+        
+    </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
