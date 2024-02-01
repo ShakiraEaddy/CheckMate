@@ -85,6 +85,14 @@ namespace CheckMate.ViewModels
                 return;
             }
 
+            var (isValid, errorMessage) = OperatingTask.Validate();
+
+            if(!isValid) 
+            {
+                await Shell.Current.DisplayAlert("Validation Error", errorMessage, "Confirm");
+                return;
+            }
+
             // Determine the busy text based on whether the task is being created or updated
             var busyText = OperatingTask.Id == 0 ? "Creating Task..." : "Updating Task...";
 

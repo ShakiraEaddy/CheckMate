@@ -16,13 +16,18 @@ namespace CheckMate.Data
         private const string DbName = "MyDatabase.db3";
 
         // Specifies for different platforms the File System path
-        private static string DbPath => Path.Combine(FileSystem.AppDataDirectory, DbName);
+        public static string DbPath => Path.Combine(FileSystem.AppDataDirectory, DbName);
+
+        // Gets the full path of the database
+        string fullPath = DbPath;
 
         // SQLiteAsyncConnection instance for database operations
         private SQLiteAsyncConnection _connection;
 
         // *Property* to get the database connection, creates if not exists
         private SQLiteAsyncConnection _Database => (_connection ??= new SQLiteAsyncConnection(DbPath, SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.SharedCache));
+
+
 
         // Create table if it doesn't exist for a specified type (TTable is a generic type parameter for the method
         private async Task CreatTableIfNonexistent<TTable>() where TTable : class, new()
