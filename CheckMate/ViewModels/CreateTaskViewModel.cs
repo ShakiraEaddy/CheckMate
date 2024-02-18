@@ -1,48 +1,152 @@
 ﻿using CheckMate.Data;
 using CheckMate.Models;
+using CheckMate.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-//using ReplayKit;
+//using Java.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CheckMate.ViewModels
-{
-    public partial class TasksViewModel : ObservableObject
+    // CheckMate_App.ViewModel
+{    
+    public partial class CreateTaskViewModel: ObservableObject
     {
+        private readonly DatabaseContext databaseContext;
+        // = new()
+        private readonly Shell _shell;
+        // private readonly TasksViewModel _tasksViewModel;
 
+        private TimeSpan _timerDuration;
+
+        public TimeSpan TimerDuration
+        {
+            get => _timerDuration;
+            set
+            {
+                SetProperty(ref _timerDuration, value);
+                OperatingTask.TimerHour = value.Hours;
+                OperatingTask.TimerMinute = value.Minutes;
+                OperatingTask.TimerSecond = value.Seconds;
+            }
+        }
+
+        private readonly CreateTaskViewModel _createTaskViewModel;
+        //public IRelayCommand GoToHomeCommand { get; }
+
+        private UserTask _createTask;
+        public UserTask CreateTask
+        {
+            get => _createTask;
+            set => SetProperty(ref _createTask, value);
+        }
+
+        private UserTask _opTask = new UserTask();
+        public UserTask OpTask
+        {
+            get => _opTask;
+            set
+            {
+                SetProperty(ref _opTask, value);
+                TimerDuration = new TimeSpan(value.TimerHour, value.TimerMinute, value.TimerSecond);
+            }
+        }
+
+        [ObservableProperty] private string taskName;
+
+       /* public CreateTaskViewModel(TasksViewModel viewModel)
+        {
+            //_tasksViewModel = new TasksViewModel(new DatabaseContext());
+            GoToHomeCommand = new RelayCommand(async () => await NavigateToHome());
+            CreateTask = new UserTask();
+        }*/
+      
+        public CreateTaskViewModel(CreateTaskViewModel createTaskViewModel)
+        {
+            _createTaskViewModel = createTaskViewModel;
+            _createTaskViewModel = new CreateTaskViewModel(new DatabaseContext());
+            _createTaskViewModel = new CreateTaskViewModel(Shell.Current);
+            GoToHomeCommand = new RelayCommand(async () => await NavigateToHome());
+            CreateTask = new UserTask();
+        }
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        public CreateTaskViewModel()
+        {
+            _shell = Shell.Current;
+            _createTaskViewModel = new CreateTaskViewModel(databaseContext);
+            InitializeViewModelAsync();
+        }
+
+        public CreateTaskViewModel(Shell shell)
+        {
+            _shell = shell;
+        }
+
+        /*[RelayCommand]
+        private async Task NavigateToHome()
+        {
+            await Shell.Current.GoToAsync("//MainPage");
+        }*/
+      
+        /*[RelayCommand]
+        private async Task SaveAndNavigate()
+        {
+            _tasksViewModel.OperatingTask = CreateTask;
+            await _tasksViewModel.SaveTaskASync();
+            await NavigateToHome();
+        }*/
+      
+
+      /// <summary>
+      /// This is where the TasksViewModel code was brought over into this class!!!!!!!!!!!!!!!!!!!!!!
+      /// </summary>
+     
         // Database context for interacting with tasks in the SQLite database
-        private readonly DatabaseContext _context;
-        public IRelayCommand SaveTaskAsyncCommand { get; }
+  //      private readonly DatabaseContext _context;
+        public IRelayCommand SaveTaskAsyncCommand { get; private set; }
         public IRelayCommand GoToCreateTaskCommand { get; }
-        public IRelayCommand GoToHomeCommand { get; }
+        public IRelayCommand GoToHomeCommand { get; private set; }
 
         // Constructor that initializes the ViewModel with a DatabaseContext
-        public TasksViewModel(DatabaseContext context)
+        public CreateTaskViewModel(DatabaseContext context)
         {
             // Assign the provided DatabaseContext to the private field _context
-            _context = context;
+            databaseContext = context;
+            InitializeCommands();
 
+        }
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        public async Task InitializeAsync()
+        {
+            await LoadTaskAsync();
+        }
+
+        private async void InitializeViewModelAsync()
+        {
+            await _createTaskViewModel.InitializeAsync();
+        }
+
+        public void InitializeCommands()
+        {
             SaveTaskAsyncCommand = new RelayCommand(async () => await SaveTaskASync());
-            GoToCreateTaskCommand = new RelayCommand(async () => await NavigateToCreateTask());
+            // GoToCreateTaskCommand = new RelayCommand(async () => await NavigateToCreateTask());
             GoToHomeCommand = new RelayCommand(async () => await NavigateToHome());
         }
 
-        [RelayCommand]
+        /* [RelayCommand]
         private async Task NavigateToCreateTask()
         {
             await Shell.Current.GoToAsync("CreateTaskPage");
-        }
+        } */
 
         [RelayCommand]
         private async Task NavigateToHome()
         {
-            await Shell.Current.GoToAsync("MainPage");
+            await Shell.Current.GoToAsync("//MainPage");
         }
 
         [RelayCommand]
@@ -77,10 +181,10 @@ namespace CheckMate.ViewModels
             await ExecuteAsync(async () =>
             {
                 // Retrieve tasks from the database using the DatabaseContext
-                var tasks = await _context.GetAllAsync<UserTask>();
+                var tasks = await databaseContext.GetAllAsync<UserTask>();
 
                 // Check if tasks were retrieved and if there are any existing tasks
-                if (tasks is not null && tasks.Any())
+                if (tasks is not null || !tasks.Any())
                 {
                     // Ensure the tasks collection is initialized, or create a new one
                     tasks ??= new ObservableCollection<UserTask>();
@@ -104,7 +208,7 @@ namespace CheckMate.ViewModels
 
         // Command method to asynchronously save the operating task to the database
         [RelayCommand]
-        private async Task SaveTaskASync()
+        public async Task SaveTaskASync()
         {
             // Check if the operating task is null; return if true
             if (OperatingTask is null)
@@ -112,13 +216,15 @@ namespace CheckMate.ViewModels
                 return;
             }
 
-            var (isValid, errorMessage) = OperatingTask.Validate();
+             var (isValid, errorMessage) = OperatingTask.Validate();
 
-            if (!isValid)
-            {
-                await Shell.Current.DisplayAlert("Validation Error", errorMessage, "Confirm");
-                return;
-            }
+              if(!isValid) 
+              {
+                  await Shell.Current.DisplayAlert("Validation Error", errorMessage, "Confirm");
+                  return;
+              } 
+
+            OperatingTask = new UserTask();
 
             // Determine the busy text based on whether the task is being created or updated
             var busyText = OperatingTask.Id == 0 ? "Creating Task..." : "Updating Task...";
@@ -129,13 +235,13 @@ namespace CheckMate.ViewModels
                 if (OperatingTask.Id == 0)
                 {
                     // Creating the task
-                    await _context.AddTaskAsync<UserTask>(OperatingTask);
+                    await databaseContext.AddTaskAsync(OperatingTask);
                     Tasks.Add(OperatingTask);
                 }
                 else
                 {
                     // Updating the task
-                    await _context.UpdateTaskAsync<UserTask>(OperatingTask);
+                    await databaseContext.UpdateTaskAsync<UserTask>(OperatingTask);
 
                     // Create a copy of the updated task for proper UI update
                     var taskCopy = OperatingTask.Clone();
@@ -160,7 +266,7 @@ namespace CheckMate.ViewModels
             await ExecuteAsync(async () =>
             {
                 // Attempt to delete the task from the database
-                if (await _context.DeleteTaskByKeyAsync<UserTask>(id))
+                if (await databaseContext.DeleteTaskByKeyAsync<UserTask>(id))
                 {
                     // If deletion is successful, remove the task from the collection
                     var task = Tasks.FirstOrDefault(p => p.Id == id);
@@ -199,5 +305,7 @@ namespace CheckMate.ViewModels
                 BusyText = "Processing...";
             }
         }
+    
     }
+
 }

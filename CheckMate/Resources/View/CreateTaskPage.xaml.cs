@@ -1,35 +1,55 @@
-﻿using CheckMate.ViewModels;
-using CheckMate_App.ViewModel;
+﻿using CheckMate.Data;
+using CheckMate.ViewModels;
+//using CheckMate_App.ViewModel;
 
 namespace CheckMate_App.View;
 
 public partial class CreateTaskPage : ContentPage
 {
-    private CreateTaskViewModel vm = new CreateTaskViewModel();
+    private readonly CreateTaskViewModel vm;
 
     private readonly TasksViewModel _viewModel;
 
     int timeLeftInSeconds;
     Timer timer;
 
-    public CreateTaskPage(TasksViewModel viewModel)
+    public CreateTaskPage()
     {
-        BindingContext = vm;
         InitializeComponent();
-        _viewModel = viewModel;
+        vm = new CreateTaskViewModel(new DatabaseContext());
+        
+        BindingContext = vm;
+
+        var databaseContext = new DatabaseContext();
+
+        _viewModel = new TasksViewModel(databaseContext);
+    }
+
+    public CreateTaskPage(CreateTaskViewModel viewModel)
+    {
+
+        InitializeComponent();
+        vm = viewModel;
 
         CreateTaskViewModel createTaskViewModel = new CreateTaskViewModel();
 
+        vm = new CreateTaskViewModel(viewModel);
+
+        BindingContext = vm;
+
         BindingContext = createTaskViewModel;
+    }
 
-        BindingContext = viewModel;
-
+    private async void OnCreateTaskClicked(object sender, EventArgs e)
+    {
+        await vm.SaveTaskASync();
+        await Navigation.PopAsync();
     }
 
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel.LoadTaskAsync();
+        await vm.LoadTaskAsync();
     }
 
     public void OnCheckBoxCheckedChange(object sender, CheckedChangedEventArgs e)

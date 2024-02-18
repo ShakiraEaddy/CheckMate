@@ -13,7 +13,7 @@ namespace CheckMate.Resources.ViewModel
 
         public MainViewModel()
         {
-            GoToCreateTaskCommand = new RelayCommand(async() => await NavigateToCreateTask());
+            GoToCreateTaskCommand = new RelayCommand(async () => await NavigateToCreateTask());
         }
 
         [RelayCommand]
