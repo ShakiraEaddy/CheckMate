@@ -24,16 +24,16 @@ namespace CheckMate.Models
         // Creates a shallow copy (clone) of the UserTask object
         public UserTask Clone() => MemberwiseClone() as UserTask;
 
-        public (bool isValid, string? errorMessage) Validate()
+        public static (bool isValid, string? errorMessage) Validate()
         {
-            if(string.IsNullOrWhiteSpace(Name))
+           /* if(Name == null)
             {
                 return (false, $"{nameof(Name)} is required.");
             }
             else if(Priority <= 0)
             {
                 return (false, $"{nameof(Priority)} must be greater than 0.");
-            }
+            }*/
            /* else if(timerHour <= 0)
             {
                 return (false, $"Invalid value for {nameof(timerHour)}. Value must be greater than 0.");

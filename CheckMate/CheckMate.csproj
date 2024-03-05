@@ -63,6 +63,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Properties\Model\" />
+	  <Folder Include="Resources\ViewModel\" />
 	</ItemGroup>
 
 	<ItemGroup>

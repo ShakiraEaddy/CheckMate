@@ -1,4 +1,5 @@
-﻿using CheckMate.Data;
+﻿//using Android.Runtime;
+using CheckMate.Data;
 using CheckMate.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,17 +11,25 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace CheckMate.ViewModels
 {
     public partial class TasksViewModel : ObservableObject
     {
+        private bool _isRefreshing;
+
+        private ObservableCollection<UserTask> dataCollection = new ObservableCollection<UserTask>();
 
         // Database context for interacting with tasks in the SQLite database
         private readonly DatabaseContext _context;
+
+        public event EventHandler TasksChange;
         public IRelayCommand SaveTaskAsyncCommand { get; }
         public IRelayCommand GoToCreateTaskCommand { get; }
         public IRelayCommand GoToHomeCommand { get; }
+
+        public ICommand RefreshCommand { get; }
 
         // Constructor that initializes the ViewModel with a DatabaseContext
         public TasksViewModel(DatabaseContext context)
@@ -31,22 +40,68 @@ namespace CheckMate.ViewModels
             SaveTaskAsyncCommand = new RelayCommand(async () => await SaveTaskASync());
             GoToCreateTaskCommand = new RelayCommand(async () => await NavigateToCreateTask());
             GoToHomeCommand = new RelayCommand(async () => await NavigateToHome());
+
+            RefreshCommand = new Command(Refresh);
+        }
+
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
+        }
+
+        public void OnTaskChange()
+        {
+            TasksChange?.Invoke(this, EventArgs.Empty);
+        }
+
+        private async void Refresh()
+        {
+            IsRefreshing = true;
+
+            try
+            {
+                var newData = await FetchDataFromDatabase();
+
+                dataCollection.Clear();
+
+                foreach (var task in newData)
+                {
+                    dataCollection.Add(task);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error refreshing data: {ex.Message}");
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }
+
+        }
+
+        private async Task<List<UserTask>> FetchDataFromDatabase()
+        {
+            var tasks = await _context.GetAllAsync<UserTask>();
+
+            return tasks.ToList();
         }
 
         [RelayCommand]
-        private async Task NavigateToCreateTask()
+        private static async Task NavigateToCreateTask()
         {
             await Shell.Current.GoToAsync("CreateTaskPage");
         }
 
         [RelayCommand]
-        private async Task NavigateToHome()
+        private static async Task NavigateToHome()
         {
-            await Shell.Current.GoToAsync("MainPage");
+            await Shell.Current.GoToAsync("///MainPage");
         }
 
         [RelayCommand]
-        private async Task SaveAndNavigate()
+        public async Task SaveAndNavigateAsync()
         {
             await SaveTaskASync();
             await NavigateToHome();
@@ -104,7 +159,7 @@ namespace CheckMate.ViewModels
 
         // Command method to asynchronously save the operating task to the database
         [RelayCommand]
-        private async Task SaveTaskASync()
+        public async Task SaveTaskASync()
         {
             // Check if the operating task is null; return if true
             if (OperatingTask is null)
@@ -112,13 +167,14 @@ namespace CheckMate.ViewModels
                 return;
             }
 
-            var (isValid, errorMessage) = OperatingTask.Validate();
+///////////////////////////////////////////////////////////////////////////////////// Validation!!!!!!!!!!!!!!!!!!!!!
+           /* var (isValid, errorMessage) = OperatingTask.Validate();
 
             if (!isValid)
             {
                 await Shell.Current.DisplayAlert("Validation Error", errorMessage, "Confirm");
                 return;
-            }
+            }*/
 
             // Determine the busy text based on whether the task is being created or updated
             var busyText = OperatingTask.Id == 0 ? "Creating Task..." : "Updating Task...";
@@ -148,8 +204,8 @@ namespace CheckMate.ViewModels
 
                 // Reset the operating task and update the UI
                 SetOperatingTaskCommand.Execute(new());
+                OnTaskChange(); 
             }, busyText);
-
         }
 
         // Command method to asynchronously delete a task by its ID
