@@ -1,117 +1,40 @@
 ﻿using CheckMate.Data;
 using CheckMate.ViewModels;
-//using CheckMate_App.ViewModel;
 
-namespace CheckMate_App.View;
 
-public partial class CreateTaskPage : ContentPage
+namespace CheckMate_App.View
 {
-    private readonly CreateTaskViewModel vm;
-
-    //private readonly TasksViewModel _viewModel;
-
-    int timeLeftInSeconds;
-    Timer timer;
-
-    public CreateTaskPage()
+    public partial class CreateTaskPage : ContentPage
     {
-        InitializeComponent();
+        private readonly CreateTaskViewModel _viewModel;
 
-        vm = new CreateTaskViewModel(new DatabaseContext());
-        
-        BindingContext = vm;
-
-       // var databaseContext = new DatabaseContext();
-
-       // _viewModel = new TasksViewModel(databaseContext);
-    }
-
-    public CreateTaskPage(CreateTaskViewModel viewModel)
-    {
-
-        InitializeComponent();
-        vm = viewModel;
-
-        // CreateTaskViewModel createTaskViewModel = new CreateTaskViewModel();
-
-       // vm = new CreateTaskViewModel(viewModel);
-
-        BindingContext = vm;
-
-       // BindingContext = createTaskViewModel;
-    }
-
-    private async void OnCreateTaskClicked(object sender, EventArgs e)
-    {
-        await vm.SaveAndNavigateAsync();
-        await Navigation.PopAsync();
-    }
-
-    protected async override void OnAppearing()
-    {
-        base.OnAppearing();
-        await vm.LoadTaskAsync();
-    }
-
-    public void OnCheckBoxCheckedChange(object sender, CheckedChangedEventArgs e)
-    {
-        //When checkbox is interacted with change whether or not the box is checked
-        if(IsEnabled != true)
+        public CreateTaskPage()
         {
-            // Keep completion time hidden
+            InitializeComponent();
+            var tasksViewModel = new TasksViewModel(new DatabaseContext());
+            _viewModel = new CreateTaskViewModel(tasksViewModel);
+            BindingContext = _viewModel;
         }
-        else if (IsEnabled == false) 
-        { 
-            // Display Completion time field
-        }
-    }
 
-    private void Timer_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        if(int.TryParse(e.NewTextValue, out int hours))
+        public CreateTaskPage(CreateTaskViewModel viewModel)
         {
-            int totalSeconds = hours * 36;
-
-            if(int.TryParse(e.NewTextValue, out int minutes)) 
-            {
-                totalSeconds += minutes * 60;
-            }
-
-            if(int.TryParse(e.NewTextValue, out int seconds))
-            {
-                totalSeconds += seconds;
-            }
-            timeLeftInSeconds = totalSeconds;
-            timer = new Timer(OnTimerElapsed, null, 0, 1000);
+            InitializeComponent();
+            _viewModel = viewModel;
+            BindingContext = _viewModel;
         }
 
-        else
+        private async void OnCreateTaskClicked(object sender, EventArgs e)
         {
-            //Handle invalid input
+            await _viewModel.SaveAndNavigateAsync();
+            await Navigation.PopAsync();
         }
 
-    }
-
-    private void OnTimerElapsed(object state)
-    {
-        timeLeftInSeconds--;
-
-        if(timeLeftInSeconds <= 0) 
-        { 
-            timer.Dispose();
-
-            //When the timer reaches 0 have a notification sent to the user that the time is up.
-        }
-        else
+        protected override async void OnAppearing()
         {
-            // Update the UI with the new time
-            
+            base.OnAppearing();
+            await _viewModel.InitializeAsync();
         }
-    }
 
-    private void Date_DateSelected(object sender, DateChangedEventArgs e)
-    {
-        DateTime selectedDate = e.NewDate;
-        //Handle the selected date accordingly
+        // Implement other event handlers as needed
     }
 }

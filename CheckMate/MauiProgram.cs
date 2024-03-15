@@ -24,7 +24,7 @@ namespace CheckMate
             builder.Services.AddSingleton<DatabaseContext>();
             builder.Services.AddSingleton<TasksViewModel>();
             // May need to change to CreateTaskPage (whether that is the view model class or an adjacent one)
-            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddTransient<MainPage>();
 
             return builder.Build();
         }

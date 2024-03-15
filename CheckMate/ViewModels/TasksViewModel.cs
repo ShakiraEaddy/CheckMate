@@ -1,8 +1,11 @@
 ﻿//using Android.Runtime;
+
 using CheckMate.Data;
 using CheckMate.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SQLite;
+
 //using ReplayKit;
 using System;
 using System.Collections.Generic;
@@ -43,6 +46,8 @@ namespace CheckMate.ViewModels
 
             RefreshCommand = new Command(Refresh);
         }
+
+       
 
         public bool IsRefreshing
         {
@@ -126,6 +131,7 @@ namespace CheckMate.ViewModels
         // Come here when adding subtasks to database
 
         // Asynchronously loads tasks from the database
+        // Asynchronously loads tasks from the database
         public async Task LoadTaskAsync()
         {
             // ExecuteAsync is a utility method to handle UI state during an asynchronous operation
@@ -137,17 +143,14 @@ namespace CheckMate.ViewModels
                 // Check if tasks were retrieved and if there are any existing tasks
                 if (tasks is not null && tasks.Any())
                 {
-                    // Ensure the tasks collection is initialized, or create a new one
-                    tasks ??= new ObservableCollection<UserTask>();
-
                     // Clear existing tasks and add new ones
-                    foreach (var task in Tasks)
+                    _tasks.Clear();
+                    foreach (var task in tasks)
                     {
-                        Tasks.Add(task);
+                        _tasks.Add(task); // Add tasks to _tasks collection, not dataCollection
                     }
                 }
             }, "Fetching Tasks..."); // Display "Fetching Tasks..." as the status during the operation
-
         }
 
         // Command method to set the operating task
@@ -254,6 +257,12 @@ namespace CheckMate.ViewModels
                 IsBusy = false;
                 BusyText = "Processing...";
             }
+        }
+
+        public static async Task<List<UserTask>> GetAllTasksAsync(SQLiteAsyncConnection connection)
+        {
+            // Execute a query to retrieve all tasks from the database
+            return await connection.Table<UserTask>().ToListAsync();
         }
     }
 }

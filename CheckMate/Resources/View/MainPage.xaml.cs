@@ -1,50 +1,30 @@
-﻿//using AudioToolbox;
-//using CheckMate.Resources.ViewModel;
-using CheckMate.ViewModels;
+﻿using CheckMate.ViewModels;
 using Microsoft.Maui.Controls;
+using System.Threading.Tasks;
 
 namespace CheckMate.View
 {
     public partial class MainPage : ContentPage
     {
-
         private readonly TasksViewModel _viewModel;
-
-        //private readonly CreateTaskViewModel _createViewModel;
 
         public MainPage(TasksViewModel viewModel)
         {
             InitializeComponent();
-
-           // MainViewModel mainViewModel = new MainViewModel();
-
-            BindingContext = viewModel;
-
             _viewModel = viewModel;
-
-          //  RefreshTaskList();
-
-            //_createViewModel = viewModel;
+            BindingContext = _viewModel;
+            
         }
 
-       /* public void RefreshTaskList()
-        {
-            //var collectionView = this.FindByName<CollectionView>("TasksCollectionView");
-
-            TaskCollectionView.ItemsSource = _viewModel.Tasks;
-        }*/
-
-        protected async override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await _viewModel.LoadTaskAsync();
+            await LoadTasksAsync();
         }
 
-        private void OnBtnClicked(object sender, EventArgs e)
+        private async Task LoadTasksAsync()
         {
-
+            await _viewModel.LoadTaskAsync(); // Assuming this method exists in TasksViewModel
         }
-
-
     }
 }
