@@ -45,9 +45,7 @@ namespace CheckMate.ViewModels
             GoToHomeCommand = new RelayCommand(async () => await NavigateToHome());
 
             RefreshCommand = new Command(Refresh);
-        }
-
-       
+        } 
 
         public bool IsRefreshing
         {
