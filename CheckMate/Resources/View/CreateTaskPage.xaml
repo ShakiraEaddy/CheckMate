@@ -11,276 +11,201 @@
     BackgroundImageSource="yellownotebookbackgroundimage.svg">
 
     <ScrollView>
-        <Grid>
-            <Grid>
-                <VerticalStackLayout Grid.Row="1">
-                    <BoxView Color="{DynamicResource Cyan100Accent}"
-             HeightRequest="1"/>
-                    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
-                          ColumnDefinitions="*, Auto, Auto"
-                          Padding="10"
-                          RowSpacing="10"
-                          ColumnSpacing="10">
-                        <VerticalStackLayout Grid.Row="0"
-                             Grid.Column="0">
-                            <Label>
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="Name"/>
-                                        <Span Text="*" FontSize="Small"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <Entry Text="{Binding OperatingTask.Name}"
-                   Placeholder="Task Name"
-                   Margin="10"/>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Row="3"
-                             Grid.Column="1">
-                            <Label Text="Completion Date"/>
-                            <DatePicker Date="{Binding OperatingTask.CompletionTime}"
-                   Margin="10"/>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Row="3"
-                             Grid.Column="2">
-                            <Label Text="Completion Time"/>
-                            <TimePicker Time="{Binding OperatingTask.CompletionTime}"
-                        Margin="10"/>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Row="1"
-                             Grid.Column="0">
-                            <Label Text="Timer: Hour(s)"/>
-                            <Picker Title="Select Hours"
-                                    SelectedItem="{Binding OperatingTask.TimerHour, Mode=TwoWay}"
-                                    Margin="10">
-                                    <Picker.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                    <x:String>1</x:String>
-                                    <x:String>2</x:String>
-                                    <x:String>3</x:String>
-                                    <x:String>4</x:String>
-                                    <x:String>5</x:String>
-                                    <x:String>6</x:String>
-                                    <x:String>7</x:String>
-                                    <x:String>8</x:String>
-                                    <x:String>9</x:String>
-                                    <x:String>10</x:String>
-                                    <x:String>11</x:String>
-                                    <x:String>12</x:String>
-                                    <x:String>13</x:String>
-                                    <x:String>14</x:String>
-                                    <x:String>15</x:String>
-                                    <x:String>16</x:String>
-                                    <x:String>17</x:String>
-                                    <x:String>18</x:String>
-                                    <x:String>19</x:String>
-                                    <x:String>20</x:String>
-                                </x:Array>
-                                </Picker.ItemsSource>
-                            </Picker>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Row="1"
-                             Grid.Column="1">
-                            <Label Text="Timer: Minute(s)"/>
-                            <Picker Title="Select Minutes"
-                                    SelectedItem="{Binding OperatingTask.TimerMinute, Mode=TwoWay}"
-                                    Margin="10">
-                                <Picker.ItemsSource>
-                                    <x:Array Type="{x:Type x:String}">
-                                        <x:String>1</x:String>
-                                        <x:String>2</x:String>
-                                        <x:String>3</x:String>
-                                        <x:String>4</x:String>
-                                        <x:String>5</x:String>
-                                        <x:String>6</x:String>
-                                        <x:String>7</x:String>
-                                        <x:String>8</x:String>
-                                        <x:String>9</x:String>
-                                        <x:String>10</x:String>
-                                        <x:String>11</x:String>
-                                        <x:String>12</x:String>
-                                        <x:String>13</x:String>
-                                        <x:String>14</x:String>
-                                        <x:String>15</x:String>
-                                        <x:String>16</x:String>
-                                        <x:String>17</x:String>
-                                        <x:String>18</x:String>
-                                        <x:String>19</x:String>
-                                        <x:String>20</x:String>
-                                        <x:String>21</x:String>
-                                        <x:String>22</x:String>
-                                        <x:String>23</x:String>
-                                        <x:String>24</x:String>
-                                        <x:String>25</x:String>
-                                        <x:String>26</x:String>
-                                        <x:String>27</x:String>
-                                        <x:String>28</x:String>
-                                        <x:String>29</x:String>
-                                        <x:String>30</x:String>
-                                        <x:String>31</x:String>
-                                        <x:String>32</x:String>
-                                        <x:String>33</x:String>
-                                        <x:String>34</x:String>
-                                        <x:String>35</x:String>
-                                        <x:String>36</x:String>
-                                        <x:String>37</x:String>
-                                        <x:String>38</x:String>
-                                        <x:String>39</x:String>
-                                        <x:String>40</x:String>
-                                        <x:String>41</x:String>
-                                        <x:String>42</x:String>
-                                        <x:String>43</x:String>
-                                        <x:String>44</x:String>
-                                        <x:String>45</x:String>
-                                        <x:String>46</x:String>
-                                        <x:String>47</x:String>
-                                        <x:String>48</x:String>
-                                        <x:String>49</x:String>
-                                        <x:String>50</x:String>
-                                        <x:String>51</x:String>
-                                        <x:String>52</x:String>
-                                        <x:String>53</x:String>
-                                        <x:String>54</x:String>
-                                        <x:String>55</x:String>
-                                        <x:String>56</x:String>
-                                        <x:String>57</x:String>
-                                        <x:String>58</x:String>
-                                        <x:String>59</x:String>
-                                        <x:String>60</x:String>
-                                    </x:Array>
-                                </Picker.ItemsSource>
-                            </Picker>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Row="1"
-                             Grid.Column="2">
-                            <Label Text="Timer: Second(s)"/>
-                            <Picker Title="Select Seconds"
-                                    SelectedItem="{Binding OperatingTask.TimerSecond, Mode=TwoWay}"
-                                    Margin="10">
-                                <Picker.ItemsSource>
-                                    <x:Array Type="{x:Type x:String}">
-                                        <x:String>1</x:String>
-                                        <x:String>2</x:String>
-                                        <x:String>3</x:String>
-                                        <x:String>4</x:String>
-                                        <x:String>5</x:String>
-                                        <x:String>6</x:String>
-                                        <x:String>7</x:String>
-                                        <x:String>8</x:String>
-                                        <x:String>9</x:String>
-                                        <x:String>10</x:String>
-                                        <x:String>11</x:String>
-                                        <x:String>12</x:String>
-                                        <x:String>13</x:String>
-                                        <x:String>14</x:String>
-                                        <x:String>15</x:String>
-                                        <x:String>16</x:String>
-                                        <x:String>17</x:String>
-                                        <x:String>18</x:String>
-                                        <x:String>19</x:String>
-                                        <x:String>20</x:String>
-                                        <x:String>21</x:String>
-                                        <x:String>22</x:String>
-                                        <x:String>23</x:String>
-                                        <x:String>24</x:String>
-                                        <x:String>25</x:String>
-                                        <x:String>26</x:String>
-                                        <x:String>27</x:String>
-                                        <x:String>28</x:String>
-                                        <x:String>29</x:String>
-                                        <x:String>30</x:String>
-                                        <x:String>31</x:String>
-                                        <x:String>32</x:String>
-                                        <x:String>33</x:String>
-                                        <x:String>34</x:String>
-                                        <x:String>35</x:String>
-                                        <x:String>36</x:String>
-                                        <x:String>37</x:String>
-                                        <x:String>38</x:String>
-                                        <x:String>39</x:String>
-                                        <x:String>40</x:String>
-                                        <x:String>41</x:String>
-                                        <x:String>42</x:String>
-                                        <x:String>43</x:String>
-                                        <x:String>44</x:String>
-                                        <x:String>45</x:String>
-                                        <x:String>46</x:String>
-                                        <x:String>47</x:String>
-                                        <x:String>48</x:String>
-                                        <x:String>49</x:String>
-                                        <x:String>50</x:String>
-                                        <x:String>51</x:String>
-                                        <x:String>52</x:String>
-                                        <x:String>53</x:String>
-                                        <x:String>54</x:String>
-                                        <x:String>55</x:String>
-                                        <x:String>56</x:String>
-                                        <x:String>57</x:String>
-                                        <x:String>58</x:String>
-                                        <x:String>59</x:String>
-                                        <x:String>60</x:String>
-                                    </x:Array>
-                                </Picker.ItemsSource>
-                            </Picker>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Row="0"
-                             Grid.Column="3">
-                            <Label>
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="Priority"/>
-                                        <Span Text="*" FontSize="Small"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <Entry Text="{Binding OperatingTask.Priority}"
-                                   Placeholder="Priority"
-                                   Margin="10"/>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Row="3"
-                                             Grid.Column="0">
-                            <Label Text="Description"/>
-                            <Entry Text="{Binding OperatingTask.Description}"
-                                   Placeholder="Description"
-                                   Margin="0"/>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Row="4"
-                                             Grid.Column="2">
-                            <Label Text="* Required"/>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Row="6"
-                                             Grid.Column="2"
-                                             HorizontalOptions="Center">
-                            <Button Grid.Row="4"
-                                    Grid.ColumnSpan="2"
-                                    Text="Update Task"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="End"
-                                    CornerRadius="4"
-                                    Padding="50, 0"
-                                    Command="{Binding SaveAndNavigateCommand}">
-                                <Button.Triggers>
-                                    <DataTrigger TargetType="Button"
-                                                 Binding="{Binding OperatingTask.Id}"
-                                                 Value="0">
-                                        <Setter Property="Text" Value="Create Task"/>
-                                    </DataTrigger>
-                                </Button.Triggers>
-                            </Button>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Row="6"
-                                             Grid.Column="1">
-                            <Button Text="Go Back"
-                                    Margin="5"
-                                    BackgroundColor="Gray"
-                                    TextColor="Black"   
-                                    Command="{Binding GoToHomeCommand}"
-                            />
-                        </VerticalStackLayout>
-                    </Grid>
-                </VerticalStackLayout>
-            </Grid>
-        </Grid>
+        <StackLayout Margin="10" Spacing="10">
+            <Label Text="Task Name *" />
+            <Entry Text="{Binding OperatingTask.Name}" Placeholder="Enter Task Name"/>
 
+            <Label Text="Completion Date" />
+            <DatePicker Date="{Binding OperatingTask.CompletionTime}" />
+
+            <Label Text="Completion Time" />
+            <TimePicker Time="{Binding OperatingTask.CompletionTime}" />
+
+            <Label Text="Timer:" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Hour(s)" VerticalOptions="Center"/>
+                <Label Text="Minute(s)" Grid.Row="1" VerticalOptions="Center"/>
+                <Label Text="Second(s)" Grid.Row="2" VerticalOptions="Center"/>
+                <Picker Grid.Column="1" Title="Select" SelectedItem="{Binding OperatingTask.TimerHour, Mode=TwoWay}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>1</x:String>
+                            <x:String>2</x:String>
+                            <x:String>3</x:String>
+                            <x:String>4</x:String>
+                            <x:String>5</x:String>
+                            <x:String>6</x:String>
+                            <x:String>7</x:String>
+                            <x:String>8</x:String>
+                            <x:String>9</x:String>
+                            <x:String>10</x:String>
+                            <x:String>11</x:String>
+                            <x:String>12</x:String>
+                            <x:String>13</x:String>
+                            <x:String>14</x:String>
+                            <x:String>15</x:String>
+                            <x:String>16</x:String>
+                            <x:String>17</x:String>
+                            <x:String>18</x:String>
+                            <x:String>19</x:String>
+                            <x:String>20</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Picker Grid.Row="1" Grid.Column="1" Title="Select" SelectedItem="{Binding OperatingTask.TimerMinute, Mode=TwoWay}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>1</x:String>
+                            <x:String>2</x:String>
+                            <x:String>3</x:String>
+                            <x:String>4</x:String>
+                            <x:String>5</x:String>
+                            <x:String>6</x:String>
+                            <x:String>7</x:String>
+                            <x:String>8</x:String>
+                            <x:String>9</x:String>
+                            <x:String>10</x:String>
+                            <x:String>11</x:String>
+                            <x:String>12</x:String>
+                            <x:String>13</x:String>
+                            <x:String>14</x:String>
+                            <x:String>15</x:String>
+                            <x:String>16</x:String>
+                            <x:String>17</x:String>
+                            <x:String>18</x:String>
+                            <x:String>19</x:String>
+                            <x:String>20</x:String>
+                            <x:String>21</x:String>
+                            <x:String>22</x:String>
+                            <x:String>23</x:String>
+                            <x:String>24</x:String>
+                            <x:String>25</x:String>
+                            <x:String>26</x:String>
+                            <x:String>27</x:String>
+                            <x:String>28</x:String>
+                            <x:String>29</x:String>
+                            <x:String>30</x:String>
+                            <x:String>31</x:String>
+                            <x:String>32</x:String>
+                            <x:String>33</x:String>
+                            <x:String>34</x:String>
+                            <x:String>35</x:String>
+                            <x:String>36</x:String>
+                            <x:String>37</x:String>
+                            <x:String>38</x:String>
+                            <x:String>39</x:String>
+                            <x:String>40</x:String>
+                            <x:String>41</x:String>
+                            <x:String>42</x:String>
+                            <x:String>43</x:String>
+                            <x:String>44</x:String>
+                            <x:String>45</x:String>
+                            <x:String>46</x:String>
+                            <x:String>47</x:String>
+                            <x:String>48</x:String>
+                            <x:String>49</x:String>
+                            <x:String>50</x:String>
+                            <x:String>51</x:String>
+                            <x:String>52</x:String>
+                            <x:String>53</x:String>
+                            <x:String>54</x:String>
+                            <x:String>55</x:String>
+                            <x:String>56</x:String>
+                            <x:String>57</x:String>
+                            <x:String>58</x:String>
+                            <x:String>59</x:String>
+                            <x:String>60</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Picker Grid.Row="2" Grid.Column="1" Title="Select" SelectedItem="{Binding OperatingTask.TimerSecond, Mode=TwoWay}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>1</x:String>
+                            <x:String>2</x:String>
+                            <x:String>3</x:String>
+                            <x:String>4</x:String>
+                            <x:String>5</x:String>
+                            <x:String>6</x:String>
+                            <x:String>7</x:String>
+                            <x:String>8</x:String>
+                            <x:String>9</x:String>
+                            <x:String>10</x:String>
+                            <x:String>11</x:String>
+                            <x:String>12</x:String>
+                            <x:String>13</x:String>
+                            <x:String>14</x:String>
+                            <x:String>15</x:String>
+                            <x:String>16</x:String>
+                            <x:String>17</x:String>
+                            <x:String>18</x:String>
+                            <x:String>19</x:String>
+                            <x:String>20</x:String>
+                            <x:String>21</x:String>
+                            <x:String>22</x:String>
+                            <x:String>23</x:String>
+                            <x:String>24</x:String>
+                            <x:String>25</x:String>
+                            <x:String>26</x:String>
+                            <x:String>27</x:String>
+                            <x:String>28</x:String>
+                            <x:String>29</x:String>
+                            <x:String>30</x:String>
+                            <x:String>31</x:String>
+                            <x:String>32</x:String>
+                            <x:String>33</x:String>
+                            <x:String>34</x:String>
+                            <x:String>35</x:String>
+                            <x:String>36</x:String>
+                            <x:String>37</x:String>
+                            <x:String>38</x:String>
+                            <x:String>39</x:String>
+                            <x:String>40</x:String>
+                            <x:String>41</x:String>
+                            <x:String>42</x:String>
+                            <x:String>43</x:String>
+                            <x:String>44</x:String>
+                            <x:String>45</x:String>
+                            <x:String>46</x:String>
+                            <x:String>47</x:String>
+                            <x:String>48</x:String>
+                            <x:String>49</x:String>
+                            <x:String>50</x:String>
+                            <x:String>51</x:String>
+                            <x:String>52</x:String>
+                            <x:String>53</x:String>
+                            <x:String>54</x:String>
+                            <x:String>55</x:String>
+                            <x:String>56</x:String>
+                            <x:String>57</x:String>
+                            <x:String>58</x:String>
+                            <x:String>59</x:String>
+                            <x:String>60</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </Grid>
+
+            <Label Text="Priority *" />
+            <Entry Text="{Binding OperatingTask.Priority}" Placeholder="Enter Priority"/>
+
+            <Label Text="Description" />
+            <Entry Text="{Binding OperatingTask.Description}" Placeholder="Enter Description"/>
+
+            <Label Text="* Required" TextColor="Red"/>
+
+            <Button Text="Update Task" Command="{Binding SaveAndNavigateCommand}" HorizontalOptions="Center"/>
+
+            <Button Text="Go Back" Command="{Binding GoToHomeCommand}" BackgroundColor="Gray" TextColor="Black" HorizontalOptions="Center"/>
+        </StackLayout>
     </ScrollView>
 </ContentPage>
