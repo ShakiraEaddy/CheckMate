@@ -196,14 +196,22 @@
             </Grid>
 
             <Label Text="Priority *" />
-            <Entry Text="{Binding OperatingTask.Priority}" Placeholder="Enter Priority"/>
+            <Picker Title="Select" SelectedItem="{Binding OperatingTask.Priority}">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>High</x:String>
+                        <x:String>Average</x:String>
+                        <x:String>Low</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
 
             <Label Text="Description" />
             <Entry Text="{Binding OperatingTask.Description}" Placeholder="Enter Description"/>
 
             <Label Text="* Required" TextColor="Red"/>
 
-            <Button Text="Update Task" Command="{Binding SaveAndNavigateCommand}" HorizontalOptions="Center"/>
+            <Button Text="Create Task" Command="{Binding SaveAndNavigateCommand}" HorizontalOptions="Center"/>
 
             <Button Text="Go Back" Command="{Binding GoToHomeCommand}" BackgroundColor="Gray" TextColor="Black" HorizontalOptions="Center"/>
         </StackLayout>

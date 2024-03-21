@@ -7,58 +7,67 @@
              x:Class="CheckMate.View.MainPage"
              Title="CheckMate">
 
-    <ScrollView>
-        <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" Command="{Binding RefreshCommand}">
-            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                <Label Text="Tasks" FontAttributes="Bold" FontSize="20" Padding="15" HorizontalOptions="Center"/>
-                <CollectionView x:Name="TaskCollectionView" ItemsSource="{Binding Tasks}" HorizontalOptions="Center">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout ItemSpacing="10" Orientation="Vertical"/>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:UserTask">
-                            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, *, Auto"
-                                  RowSpacing="5" Padding="5" BackgroundColor="DarkCyan">
-                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontAttributes="Bold"/>
-                                <Label Grid.Row="1" Grid.Column="0" FontSize="12" FontAttributes="Bold">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="{Binding TimerHour, StringFormat='{00}'}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                                <Label Grid.Row="1" Grid.Column="0" Text="hr." Margin="10, 0, 0, 0" FontSize="12" FontAttributes="Bold"/>
-                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding TimerMinute, StringFormat='{00}'}" FontSize="12" FontAttributes="Bold"/>
-                                <Label Grid.Row="1" Grid.Column="1" Text="min." Margin="20, 0, 0, 0" FontSize="12" FontAttributes="Bold"/>
-                                <Label Grid.Row="1" Grid.Column="2" Text="{Binding TimerSecond, StringFormat='{00}'}" Margin="20, 0, 0, 0" FontSize="12" FontAttributes="Bold"/>
-                                <Label Grid.Row="1" Grid.Column="2" Text="sec." Margin="30, 0, 0, 0" FontSize="12" FontAttributes="Bold"/>
-                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding Priority}" FontSize="12" FontAttributes="Bold"/>
-                                <Label Grid.Row="3" Grid.Column="2" Text="{Binding Description}" FontSize="12" FontAttributes="Bold"/>
-                                <Label Grid.Row="3" Grid.Column="0" Text="{Binding CompletionTime}" FontSize="12" FontAttributes="Bold"/>
-                                <Button Grid.Row="0" Grid.Column="6" Text="Edit" Padding="0" HeightRequest="25" FontSize="12" CornerRadius="2"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TasksViewModel}}, Path=SetOperatingTaskCommand}"
-                                        CommandParameter="{Binding .}"/>
-                                <Button Grid.Row="1" Grid.Column="6" Text="Delete" Padding="0" HeightRequest="25" FontSize="12" CornerRadius="2"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TasksViewModel}}, Path=DeleteTaskCommand}"
-                                        CommandParameter="{Binding Id}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.EmptyView>
-                        <ContentView>
-                            <ContentView HorizontalOptions="Center" VerticalOptions="Center">
-                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                                    <Label Text="No Tasks Have Been Created" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                                    <Label Text="Create your first Task with the 'Create Task' button"/>
-                                </StackLayout>
+    <Grid>
+        <ScrollView>
+            <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" Command="{Binding RefreshCommand}">
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="Tasks" FontAttributes="Bold" FontSize="20" Padding="15" HorizontalOptions="Center"/>
+                    <CollectionView x:Name="TaskCollectionView" ItemsSource="{Binding Tasks}" HorizontalOptions="Center">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="10" Orientation="Vertical"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:UserTask">
+                                <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, *, Auto"
+                                      RowSpacing="5" Padding="5" BackgroundColor="DarkCyan">
+                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontAttributes="Bold"/>
+                                    <Label Grid.Row="1" Grid.Column="0" FontSize="12" FontAttributes="Bold">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding TimerHour, StringFormat='{00}'}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Grid.Row="1" Grid.Column="0" Text="hr." Margin="10, 0, 0, 0" FontSize="12" FontAttributes="Bold"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding TimerMinute, StringFormat='{00}'}" FontSize="12" FontAttributes="Bold"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="min." Margin="20, 0, 0, 0" FontSize="12" FontAttributes="Bold"/>
+                                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding TimerSecond, StringFormat='{00}'}" Margin="20, 0, 0, 0" FontSize="12" FontAttributes="Bold"/>
+                                    <Label Grid.Row="1" Grid.Column="2" Text="sec." Margin="30, 0, 0, 0" FontSize="12" FontAttributes="Bold"/>
+                                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding Priority}" FontSize="12" FontAttributes="Bold"/>
+                                    <Label Grid.Row="3" Grid.Column="2" Text="{Binding Description}" FontSize="12" FontAttributes="Bold"/>
+                                    <Label Grid.Row="3" Grid.Column="0" Text="{Binding CompletionTime}" FontSize="12" FontAttributes="Bold"/>
+                                    <Button Grid.Row="0" Grid.Column="6" Text="Edit" Padding="0" HeightRequest="25" FontSize="12" CornerRadius="2"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TasksViewModel}}, Path=SetOperatingTaskCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                    <Button Grid.Row="1" Grid.Column="6" Text="Delete" Padding="0" HeightRequest="25" FontSize="12" CornerRadius="2"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TasksViewModel}}, Path=DeleteTaskCommand}"
+                                            CommandParameter="{Binding Id}"/>
+                                    <Button Grid.Row="2" Grid.Column="6" Text="Complete" Padding="0" HeightRequest="25" FontSize="12" CornerRadius="2"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TasksViewModel}}, Path=DeleteTaskCommand}"
+                                            CommandParameter="{Binding Id}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.EmptyView>
+                            <ContentView>
+                                <ContentView HorizontalOptions="Center" VerticalOptions="Center">
+                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Label Text="No Tasks Have Been Created" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                        <Label Text="Create your first Task with the 'Create Task' button"/>
+                                    </StackLayout>
+                                </ContentView>
                             </ContentView>
-                        </ContentView>
-                    </CollectionView.EmptyView>
-                </CollectionView>
-                <Button x:Name="btnCreateTask" Text="Create Task" Padding="10" Margin="20" FontSize="12" CornerRadius="7"
-        Command="{Binding GoToCreateTaskCommand}" WidthRequest="150"/>
+                        </CollectionView.EmptyView>
+                    </CollectionView>
 
-            </StackLayout>
-        </RefreshView>
-    </ScrollView>
+                </StackLayout>
+            </RefreshView>
+        </ScrollView>
+
+        <StackLayout VerticalOptions="End" HorizontalOptions="Center">
+            <Button x:Name="btnCreateTask" Text="Create Task" Padding="10" Margin="20" FontSize="12" CornerRadius="7"
+                       Command="{Binding GoToCreateTaskCommand}" WidthRequest="150"/>
+        </StackLayout>
+        
+    </Grid>
 </ContentPage>
