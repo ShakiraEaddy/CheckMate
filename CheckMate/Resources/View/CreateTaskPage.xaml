@@ -21,7 +21,7 @@
             <Label Text="Completion Time" />
             <TimePicker Time="{Binding OperatingTask.CompletionTime}" />
 
-            <Label Text="Timer:" />
+            <Label Text="Time Required:" />
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
