@@ -26,6 +26,26 @@ namespace CheckMate.ViewModels
             set => _tasksViewModel.OperatingTask = value;
         }
 
+        private int _selectedPriorityIndex;
+        public int SelectedPriorityIndex
+        {
+            get => _selectedPriorityIndex;
+            set
+            {
+                SetProperty(ref _selectedPriorityIndex, value);
+                // Map selected index to priority level and set the Priority property of the UserTask
+                if (OperatingTask != null)
+                {
+                    if (value == 0)
+                        OperatingTask.Priority = 1; // High priority
+                    else if (value == 1)
+                        OperatingTask.Priority = 2; // Average priority
+                    else if (value == 2)
+                        OperatingTask.Priority = 3; // Low priority
+                }
+            }
+        }
+
         public CreateTaskViewModel(TasksViewModel tasksViewModel)
         {
             _tasksViewModel = tasksViewModel ?? throw new ArgumentNullException(nameof(tasksViewModel));

@@ -196,7 +196,7 @@
             </Grid>
 
             <Label Text="Priority *" />
-            <Picker Title="Select" SelectedItem="{Binding OperatingTask.Priority}">
+            <Picker Title="Select" SelectedIndex="{Binding SelectedPriorityIndex}">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>High</x:String>

@@ -128,6 +128,26 @@ namespace CheckMate.ViewModels
 
         // Come here when adding subtasks to database
 
+       /* private int _selectedPriorityIndex;
+        public int SelectedPriorityIndex
+        {
+            get => _selectedPriorityIndex;
+            set
+            {
+                SetProperty(ref _selectedPriorityIndex, value);
+                // Map selected index to priority level and set the Priority property of the UserTask
+                if (OperatingTask != null)
+                {
+                    if (value == 0)
+                        OperatingTask.Priority = 3; // High priority
+                    else if (value == 1)
+                        OperatingTask.Priority = 2; // Average priority
+                    else if (value == 2)
+                        OperatingTask.Priority = 1; // Low priority
+                }
+            }
+        } */
+
         // Asynchronously loads tasks from the database
         // Asynchronously loads tasks from the database
         public async Task LoadTaskAsync()
@@ -137,6 +157,7 @@ namespace CheckMate.ViewModels
             {
                 // Retrieve tasks from the database using the DatabaseContext
                 var tasks = await _context.GetAllAsync<UserTask>();
+                tasks = tasks.OrderBy(task => task.Priority);
 
                 // Check if tasks were retrieved and if there are any existing tasks
                 if (tasks is not null && tasks.Any())
